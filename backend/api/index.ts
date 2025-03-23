@@ -69,5 +69,18 @@ const connectDB = async () => {
 // Initialize MongoDB connection
 connectDB();
 
+// Error handling middleware
+app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error('Error:', err);
+  res.status(500).json({
+    error: process.env.NODE_ENV === 'production' ? 'Internal Server Error' : err.message
+  });
+});
+
+// Handle 404 errors
+app.use((req: express.Request, res: express.Response) => {
+  res.status(404).json({ error: 'Not Found' });
+});
+
 // Export the Express app for Vercel
 export default app; 
