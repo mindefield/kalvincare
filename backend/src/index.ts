@@ -14,12 +14,18 @@ const app = express();
 const PORT = process.env.PORT || 9000;
 
 // CORS configuration
-const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:3000').split(',');
+const allowedOrigins = [
+  'https://kalvincare-j1bq.vercel.app',
+  'http://localhost:3000',
+  ...(process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : [])
+];
+
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log('Blocked origin:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -40,7 +46,11 @@ app.use('/api/lead', leadRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok' });
+  res.json({ 
+    status: 'ok',
+    environment: process.env.NODE_ENV,
+    allowedOrigins
+  });
 });
 
 // Connect to MongoDB if MONGODB_URI is provided
@@ -56,6 +66,7 @@ const startServer = async () => {
     app.listen(PORT, () => {
       console.log(`Backend server running on port ${PORT}`);
       console.log(`Swagger documentation available at http://localhost:${PORT}/api-docs`);
+      console.log('Allowed origins:', allowedOrigins);
     });
   } catch (error) {
     console.error('Server startup error:', error);
