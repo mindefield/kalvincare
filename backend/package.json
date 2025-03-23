@@ -1,0 +1,35 @@
+{
+  "name": "kalvincare-backend",
+  "version": "1.0.0",
+  "description": "Backend server for KalvinCare dog health analysis application",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "keywords": ["dog", "health", "ai", "breed-detection"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.1",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "multer": "^1.4.5-lts.1",
+    "axios": "^1.6.7"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "@types/node": "^20.11.16",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/multer": "^1.4.11",
+    "typescript": "^5.3.3",
+    "ts-node-dev": "^2.0.0"
+  }
+} 
