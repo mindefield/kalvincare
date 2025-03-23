@@ -4,10 +4,10 @@
   "description": "Backend for KalvinCare - AI-powered dog health and behavior analysis",
   "main": "api/index.ts",
   "scripts": {
-    "start": "node api/dist/index.js",
+    "start": "node dist/api/index.js",
     "dev": "ts-node-dev --respawn --transpile-only api/index.ts",
-    "build": "tsc -p api/tsconfig.json",
-    "vercel-build": "tsc -p api/tsconfig.json",
+    "build": "tsc",
+    "vercel-build": "tsc",
     "test": "jest"
   },
   "keywords": [
