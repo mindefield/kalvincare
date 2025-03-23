@@ -2,12 +2,12 @@
   "name": "kalvincare-backend",
   "version": "1.0.0",
   "description": "Backend for KalvinCare - AI-powered dog health and behavior analysis",
-  "main": "dist/index.js",
+  "main": "api/index.ts",
   "scripts": {
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",
-    "vercel-build": "npm run build",
+    "vercel-build": "tsc",
     "test": "jest"
   },
   "keywords": [
