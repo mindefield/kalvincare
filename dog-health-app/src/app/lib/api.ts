@@ -1,21 +1,29 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
 
+const handleResponse = async (response: Response) => {
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ message: 'An error occurred' }));
+    throw new Error(error.message || `HTTP error! status: ${response.status}`);
+  }
+  return response.json();
+};
+
 export const api = {
   // Breed detection endpoint
   detectBreed: async (imageFile: File) => {
     const formData = new FormData();
     formData.append('image', imageFile);
     
-    const response = await fetch(`${API_URL}/api/breed/detect`, {
-      method: 'POST',
-      body: formData,
-    });
-    
-    if (!response.ok) {
-      throw new Error('Failed to detect breed');
+    try {
+      const response = await fetch(`${API_URL}/api/breed/detect`, {
+        method: 'POST',
+        body: formData,
+      });
+      return handleResponse(response);
+    } catch (error) {
+      console.error('Breed detection error:', error);
+      throw error;
     }
-    
-    return response.json();
   },
 
   // Health analysis endpoint
@@ -26,19 +34,19 @@ export const api = {
     activityLevel: string;
     healthConditions: string[];
   }) => {
-    const response = await fetch(`${API_URL}/api/health/analyze`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    
-    if (!response.ok) {
-      throw new Error('Failed to analyze health');
+    try {
+      const response = await fetch(`${API_URL}/api/health/analyze`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      return handleResponse(response);
+    } catch (error) {
+      console.error('Health analysis error:', error);
+      throw error;
     }
-    
-    return response.json();
   },
 
   // Lead capture endpoint
@@ -48,18 +56,18 @@ export const api = {
     phone: string;
     message: string;
   }) => {
-    const response = await fetch(`${API_URL}/api/lead/capture`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    
-    if (!response.ok) {
-      throw new Error('Failed to capture lead');
+    try {
+      const response = await fetch(`${API_URL}/api/lead/capture`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      return handleResponse(response);
+    } catch (error) {
+      console.error('Lead capture error:', error);
+      throw error;
     }
-    
-    return response.json();
   },
 }; 
